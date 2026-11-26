@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Info } from "lucide-react";
 import {
   Bar,
@@ -15,6 +16,20 @@ import {
 import { money, placeName, shortDate, shortPlace } from "@/lib/format";
 import type { PrecoPorData, PrecoPorPraca } from "@/lib/types";
 import type { ReactNode } from "react";
+
+function useNarrowScreen() {
+  const [narrow, setNarrow] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 767px)");
+    const update = () => setNarrow(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  return narrow;
+}
 
 function ChartPanel({
   title,
@@ -70,6 +85,8 @@ function PriceTooltip({
 const grid = { stroke: "var(--border)", strokeDasharray: "3 4", vertical: false };
 
 export function PriceLineChart({ data }: { data: PrecoPorData[] }) {
+  const narrow = useNarrowScreen();
+
   return (
     <ChartPanel
       title="Evolução do preço"
@@ -85,7 +102,7 @@ export function PriceLineChart({ data }: { data: PrecoPorData[] }) {
         <p className="chart-empty">Sem cotações diárias neste período.</p>
       ) : (
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={{ top: 10, right: 8, left: 0, bottom: 4 }}>
+          <LineChart data={data} margin={{ top: 10, right: narrow ? 8 : 12, left: 4, bottom: 4 }}>
             <CartesianGrid {...grid} />
             <XAxis dataKey="data" tickFormatter={shortDate} minTickGap={35} axisLine={false} tickLine={false} dy={8} />
             <YAxis
@@ -93,7 +110,7 @@ export function PriceLineChart({ data }: { data: PrecoPorData[] }) {
               tickFormatter={(value) => Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 0 })}
               axisLine={false}
               tickLine={false}
-              width={48}
+              width={narrow ? 58 : 68}
             />
             <Tooltip content={<PriceTooltip />} />
             <Line
@@ -114,6 +131,7 @@ export function PriceLineChart({ data }: { data: PrecoPorData[] }) {
 }
 
 export function PracaBarChart({ data }: { data: PrecoPorPraca[] }) {
+  const narrow = useNarrowScreen();
   const rows = [...data]
     .sort((a, b) => b.preco_medio - a.preco_medio)
     .map((item) => ({ ...item, nome: placeName(item.praca_nome) }));
@@ -133,7 +151,7 @@ export function PracaBarChart({ data }: { data: PrecoPorPraca[] }) {
         <p className="chart-empty">Sem praças com cotação neste período.</p>
       ) : (
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={rows} layout="vertical" margin={{ top: 0, right: 20, left: 0, bottom: 4 }}>
+          <BarChart data={rows} layout="vertical" margin={{ top: 0, right: narrow ? 8 : 20, left: 0, bottom: 4 }}>
             <CartesianGrid {...grid} horizontal={false} vertical />
             <XAxis
               type="number"
@@ -142,7 +160,17 @@ export function PracaBarChart({ data }: { data: PrecoPorPraca[] }) {
               axisLine={false}
               tickLine={false}
             />
-            <YAxis type="category" dataKey="nome" width={137} axisLine={false} tickLine={false} tickFormatter={shortPlace} />
+            <YAxis
+              type="category"
+              dataKey="nome"
+              width={narrow ? 72 : 137}
+              axisLine={false}
+              tickLine={false}
+              tickFormatter={(value) => {
+                const name = shortPlace(String(value));
+                return narrow && name.length > 10 ? `${name.slice(0, 9)}…` : name;
+              }}
+            />
             <Tooltip content={<PriceTooltip />} />
             <Bar dataKey="preco_medio" name="Preço médio" fill="var(--chart-bar)" radius={[0, 3, 3, 0]} barSize={13} isAnimationActive={false} />
           </BarChart>

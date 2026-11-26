@@ -211,7 +211,7 @@ export function Dashboard() {
             sizes="(max-width: 1440px) 100vw, 1440px"
           />
           <div className="hero-copy">
-            <div className="hero-eyebrow mb-2 flex items-center gap-1.5">
+            <div className="hero-eyebrow mb-2 flex flex-wrap items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-hero-foreground" />
               Mercado agropecuário · Bahia
             </div>
@@ -227,7 +227,7 @@ export function Dashboard() {
           </div>
         </section>
 
-        <div className="mb-4 mt-4 flex items-center justify-between gap-2 text-[10px] text-muted-foreground">
+        <div className="mb-4 mt-4 flex flex-wrap items-center justify-between gap-2 text-[10px] text-muted-foreground">
           <span className="flex items-center gap-1.5">
             <Database className="size-3" />
             Cotações coletadas da SEAGRI-BA
@@ -264,7 +264,7 @@ export function Dashboard() {
         <div className="mb-4 mt-7 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <h2 className="text-[16px] font-semibold">Visão geral</h2>
-            <span className="rounded-md bg-accent px-2 py-1 text-[10px] font-medium text-primary">
+            <span className="max-w-full rounded-md bg-accent px-2 py-1 text-[10px] font-medium break-words text-primary">
               {applied ? productLabel : "Produto"}
             </span>
           </div>
@@ -287,13 +287,13 @@ export function Dashboard() {
         ) : painel.state.status === "ready" ? (
           <>
             {painel.state.data.estatisticas.total < 3 && (
-              <div role="alert" className="mb-4 flex items-center gap-2 rounded-lg border border-amber/30 bg-amber-soft p-3 text-xs text-amber">
+              <div role="alert" className="mb-4 flex items-start gap-2 rounded-lg border border-amber/30 bg-amber-soft p-3 text-xs text-amber">
                 <TriangleAlert className="size-4" />
                 Poucas amostras: interprete com cautela
               </div>
             )}
             <KpiGrid data={painel.state.data.estatisticas} />
-            <div className="mt-5 grid gap-5 lg:grid-cols-[1.55fr_1fr]">
+            <div className="mt-5 grid min-w-0 gap-5 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
               <PriceLineChart data={painel.state.data.serie} />
               <PracaBarChart data={painel.state.data.porPraca} />
             </div>
@@ -316,7 +316,7 @@ export function Dashboard() {
               href="https://www.seagri.ba.gov.br/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-[10px] text-primary"
+              className="flex max-w-full flex-wrap items-center gap-1 text-[10px] text-primary"
             >
               Secretaria da Agricultura da Bahia · SEAGRI-BA
               <ArrowUpRight className="size-3" />

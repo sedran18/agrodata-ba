@@ -91,7 +91,7 @@ function DateField({
   };
 
   return (
-    <label>
+    <label className="filter-field">
       <span className="filter-label">{label}</span>
       <span className="filter-control">
         <input
@@ -99,6 +99,7 @@ function DateField({
           type="text"
           inputMode="numeric"
           lang="pt-BR"
+          size={10}
           placeholder="dd/mm/aaaa"
           aria-label={label}
           value={text}
@@ -124,7 +125,7 @@ function DateField({
             if (event.target.value) onChange(event.target.value);
           }}
         />
-        <CalendarDays className="size-4 text-muted-foreground" />
+        <CalendarDays className="size-4 shrink-0 text-muted-foreground" />
       </span>
     </label>
   );

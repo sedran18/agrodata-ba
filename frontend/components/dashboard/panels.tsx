@@ -54,7 +54,7 @@ export function KpiGrid({ data }: { data: EstatisticasGerais }) {
   const variationClass = data.variacao_percentual !== null && data.variacao_percentual < 0 ? "text-negative" : "text-positive";
 
   return (
-    <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
+    <div className="grid min-w-0 grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
       <KpiCard label="Preço médio" value={money(data.preco_medio)} detail="no período selecionado" icon={<CircleDollarSign className="size-3.5" />} />
       <KpiCard label="Mediana" value={money(data.mediana)} detail="no período selecionado" icon={<ChartNoAxesColumn className="size-3.5" />} />
       <KpiCard label="Menor preço" value={money(data.min_preco)} detail="cotação mais baixa do período" icon={<TrendingDown className="size-3.5" />} />
@@ -168,9 +168,9 @@ export function RankingList({
         </div>
         <TrendingUp className="size-4 text-muted-foreground" />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2">
+      <div className="grid min-w-0 grid-cols-1 sm:grid-cols-2">
         <div className="border-t sm:border-r">
-          <h4 className="flex items-center gap-1.5 px-6 py-3 text-[11px] font-medium text-positive">
+          <h4 className="flex items-center gap-1.5 px-4 py-3 text-[11px] font-medium text-positive sm:px-6">
             <TrendingUp className="size-3.5" />
             Maiores altas
           </h4>
@@ -191,7 +191,7 @@ export function RankingList({
           {ranking.maiores_altas.length === 0 && <p className="p-6 text-xs text-muted-foreground">Nenhuma alta no período.</p>}
         </div>
         <div className="border-t">
-          <h4 className="flex items-center gap-1.5 px-6 py-3 text-[11px] font-medium text-negative">
+          <h4 className="flex items-center gap-1.5 px-4 py-3 text-[11px] font-medium text-negative sm:px-6">
             <TrendingDown className="size-3.5" />
             Maiores quedas
           </h4>
@@ -219,7 +219,7 @@ export function RankingList({
 export function LoadingState() {
   return (
     <div aria-label="Carregando cotações" aria-busy="true">
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
+      <div className="grid min-w-0 grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
         {Array.from({ length: 6 }, (_, index) => (
           <div className="panel kpi" key={index}>
             <div className="skeleton h-3 w-24" />
@@ -228,7 +228,7 @@ export function LoadingState() {
           </div>
         ))}
       </div>
-      <div className="mt-5 grid gap-5 lg:grid-cols-2">
+      <div className="mt-5 grid min-w-0 gap-5 lg:grid-cols-2">
         {Array.from({ length: 2 }, (_, index) => (
           <div className="panel p-6" key={index}>
             <div className="skeleton h-4 w-40" />

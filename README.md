@@ -1,4 +1,4 @@
-# Radar de Preços Agro BA
+# AgroData
 
 Dashboard of agricultural price quotations collected from the SEAGRI Bahia public listing. It stores quotations in PostgreSQL, exposes them through a FastAPI service, and shows averages, ranges, and market movements in a Next.js interface.
 
@@ -16,7 +16,7 @@ The API does not implement authentication or authorization.
 
 ## Technologies
 
-- Backend: Python 3.12, FastAPI, Uvicorn, SQLAlchemy, psycopg, pandas, Beautiful Soup, requests
+- Backend: Python 3.12, FastAPI, Uvicorn, SQLAlchemy, psycopg, pandas, requests
 - Frontend: Next.js 16, React 19, TypeScript, Tailwind CSS 4, Recharts
 - Database: PostgreSQL 17
 - Containers: Docker Compose, with cron in the scheduler container

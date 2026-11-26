@@ -162,7 +162,7 @@ export function Dashboard() {
 
   return (
     <>
-      <header className="topbar">
+      <header className="topbar flex justify-center">
         <div className="page-wrap flex h-full items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="brand-mark">
